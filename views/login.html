@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+</head>
+<body>
+
+	<section>
+		<center>
+			<form id = "login-form" style="width: 250px; margin-top: calc((100%) / 10);">
+				<div>
+					<h2>Login Form</h2>
+				</div>
+				<div class = "form-group">
+					<input placeholder="Username" class = "form-control" type = "text" required id = "username"><br />
+					<input placeholder="Password" class = "form-control" type = "password" required id = "password"><br />
+					<button class = "btn btn-primary form-control">Login</button>
+					<span id = "error" style = "color:red;"></span>
+				</div>
+			</form>
+		</center>
+	</section>
+
+</body>
+	<script>
+		$('#login-form').submit(function(e){
+			e.preventDefault();
+			let username = $('#username').val();
+			let password = $('#password').val();
+			// console.log(email, password);
+
+			$.ajax({
+				url: '/api/login',
+				type: 'post',
+				data : {username, password},
+				success: function(response){
+					if(!response.error){
+						console.log(response);
+						location.href = "/";
+					}else{
+						console.log(response);
+						$('#error').html("Invalid username or password");
+					}
+				},
+				error: function(error){
+					console.log(error)
+				}
+			});
+		});
+	</script>
+
+	
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</html>
